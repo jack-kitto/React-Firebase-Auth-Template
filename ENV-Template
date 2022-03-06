@@ -1,0 +1,13 @@
+############################################################
+#       .env file sample
+#       (1) Copy this to a file called .env 
+#       (2) Enter respective firebase details
+#       Note: Entries must start with REACT_APP_FIREBASE
+############################################################
+
+REACT_APP_FIREBASE_API_KEY= 
+REACT_APP_FIREBASE_AUTH_DOMAIN= 
+REACT_APP_FIREBASE_PROJECT_ID=
+REACT_APP_FIREBASE_STORAGE_BUCKET=
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=
+REACT_APP_FIREBASE_APP_ID=
