@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
 import React, { useContext, useState, useEffect } from "react"
 import { auth } from "../firebase"
 
@@ -23,6 +23,10 @@ export function AuthProvider({ children }) {
       return createUserWithEmailAndPassword(auth, email, password)
   }
 
+  function login(email, password){
+      return signInWithEmailAndPassword(auth, email, password)
+  }
+
   // Set the current user every time this component renders
   useEffect(() => {
       // Firebase calls auth.onAuthStateChanged after creating a user
@@ -40,6 +44,7 @@ export function AuthProvider({ children }) {
   // This allows us to access the current user throughout all of our react components wrapped in <AuthProvider></AuthProvider>
   const value = {
     currentUser,
+    login,
     signup
   }
 
