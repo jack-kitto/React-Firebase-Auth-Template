@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
-import { app } from '../firebase'
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 
@@ -18,8 +17,6 @@ export default function Login() {
       console.log("Signing up")
       console.log("Email: ", emailRef.current.value)
       console.log("Password: ", passwordRef.current.value)
-
-      // Check if passwords match, return an error if they don't match
 
       try{
           setError("")
@@ -51,10 +48,13 @@ export default function Login() {
               <Form.Label>Password</Form.Label>
               <Form.Control type="password" ref={passwordRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <Button disabled={loading} className="w-100 mt-3" type="submit">
               Log In
             </Button>
           </Form>
+          <div className="w-100 text-center mt-2">
+            <Link to="/reset-password">Forgot your password?</Link>
+          </div>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">

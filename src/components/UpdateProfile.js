@@ -1,20 +1,19 @@
+
 import React, { useRef, useState } from "react"
 import { Form, Button, Card, Alert } from "react-bootstrap"
-import { app } from '../firebase'
 import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../contexts/AuthContext"
 
-export default function Signup() {
+export default function UpdateProfile() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { signup } = useAuth()
+  const { currentUser, setEmail, setPassword } = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
 
-
-  async function handleSubmit(e){
+  function handleSubmit(e){
       e.preventDefault()
       
       // Check if passwords match, return an error if they don't match
@@ -22,17 +21,29 @@ export default function Signup() {
           return setError("Passwords do not match")
       }
 
-      try{
-          setError("")
-          setLoading(true)
-          await signup(emailRef.current.value, passwordRef.current.value)
-          navigate("/")
-      }catch(err){
-          console.log(err)
-          setError("Failed to create an account")
+      const promises = []
+      setLoading(true)
+      setError("")
+
+      if(emailRef.current.value !== currentUser.email){
+          promises.push(setEmail(emailRef.current.valule))
       }
 
-      setLoading(false)
+      if(passwordRef.current.value){
+          promises.push(setPassword(passwordRef.current.value))
+      }
+
+      Promise.all(promises)
+        .then(() => {
+            navigate("/")
+        })
+        .catch(() => {
+            setError("Failed to update")
+        })
+        .finally(() => {
+            setLoading(false)
+        })
+
 
 
   }
@@ -41,29 +52,29 @@ export default function Signup() {
     <>
       <Card>
         <Card.Body>
-          <h2 className="text-center mb-4">Sign Up</h2>
+          <h2 className="text-center mb-4">Update Profile</h2>
           {error && <Alert variant="danger">{error}</Alert>}
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
-              <Form.Control type="email" ref={emailRef} required />
+              <Form.Control type="email" defaultValue={currentUser.email} ref={emailRef} required />
             </Form.Group>
             <Form.Group id="password">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" ref={passwordRef} required />
+              <Form.Control placeholder="Leave blank to keep the same" type="password" ref={passwordRef} />
             </Form.Group>
             <Form.Group id="password-confirm">
               <Form.Label>Password Confirmation</Form.Label>
-              <Form.Control type="password" ref={passwordConfirmRef} required />
+              <Form.Control placeholder="Leave blank to keep the same" type="password" ref={passwordConfirmRef} />
             </Form.Group>
             <Button disabled={loading} className="w-100 mt-3" type="submit">
-              Sign Up
+              Update
             </Button>
           </Form>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
-        Already have an account? <Link to="/login">Log In</Link>
+        <Link to="/">Cancel</Link>
       </div>
     </>
   )

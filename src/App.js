@@ -4,6 +4,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Dashboard from "./components/Dashboard";
 import Login from "./components/Login";
+import Private from "./components/Private";
+import ResetPassword from "./components/ResetPassword";
+import UpdateProfile from "./components/UpdateProfile";
 
 function App() {
   return (
@@ -14,9 +17,19 @@ function App() {
             <Router>
               <AuthProvider>
                 <Routes>
-                  <Route path='/' element={<Dashboard />} />
+                  <Route exact path='/' element={
+                    <Private>
+                      <Dashboard />
+                    </Private>
+                  } />
+                  <Route path='/update-profile' element={
+                    <Private>
+                      <UpdateProfile />
+                    </Private>
+                  } />
                   <Route path='/signup' element={<Signup />} />
                   <Route path='/login' element={<Login />} />
+                  <Route path='/reset-password' element={<ResetPassword />} />
                 </Routes>
               </AuthProvider>
             </Router>
