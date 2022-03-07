@@ -20,7 +20,7 @@ function App() {
             <Router>
               <AuthProvider>
                 <Routes>
-                  <Route exact path='/' element={
+                  <Route path='/dashboard' element={
                     <Private>
                       <Dashboard />
                     </Private>
