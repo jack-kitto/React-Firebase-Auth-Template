@@ -1,4 +1,4 @@
-import { updateEmail, updatePassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { updateEmail, updatePassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signInWithEmailAndPassword } from "firebase/auth"
 import React, { useContext, useState, useEffect } from "react"
 import { auth } from "../firebase"
 
@@ -44,6 +44,10 @@ export function AuthProvider({ children }) {
     return updatePassword(auth.currentUser, password)
   }
 
+  function deleteAccount(user){
+    return user.delete()
+  }
+
   // Set the current user every time this component renders
   useEffect(() => {
       // Firebase calls auth.onAuthStateChanged after creating a user
@@ -66,7 +70,8 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     setEmail,
-    setPassword
+    setPassword,
+    deleteAccount
   }
 
   return (

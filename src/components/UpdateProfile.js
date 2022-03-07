@@ -8,7 +8,7 @@ export default function UpdateProfile() {
   const emailRef = useRef()
   const passwordRef = useRef()
   const passwordConfirmRef = useRef()
-  const { currentUser, setEmail, setPassword } = useAuth()
+  const { currentUser, setEmail, setPassword, deleteAccount} = useAuth()
   const [error, setError] = useState("")
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
@@ -48,6 +48,17 @@ export default function UpdateProfile() {
 
   }
 
+  async function handleDelete(){
+    try{
+      setError("")
+      setLoading(true)
+      await deleteAccount(currentUser)
+    }catch{
+      setError("Could not delete accout")
+    }
+    setLoading(false)
+  }
+
   return (
     <>
       <Card>
@@ -69,6 +80,9 @@ export default function UpdateProfile() {
             </Form.Group>
             <Button disabled={loading} className="w-100 mt-3" type="submit">
               Update
+            </Button>
+            <Button disabled={loading} className="w-100 mt-3" variant="danger" onClick={handleDelete}>
+              DELETE ACCOUNT
             </Button>
           </Form>
         </Card.Body>
