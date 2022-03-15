@@ -8,12 +8,12 @@ import Private from "./components/Private";
 import ResetPassword from "./components/ResetPassword";
 import UpdateProfile from "./components/UpdateProfile";
 import Dashboard from "./components/Dashboard";
-import NavBar from "./components/NavBar";
+import PrivateNavBar from "./components/PrivateNavBar";
 
 function App() {
   return (
     <>
-      <NavBar />
+          <PrivateNavBar />
       <AuthProvider>
         <Container className="d-flex align-items-center justify-content-center" style={{ minHeight: "100vh" }}>
           <div className="w-100" style={{ maxWidth: "400px" }}>
